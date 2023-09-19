@@ -14,18 +14,20 @@ int (*pick_f(const char *format))(va_list)
 		{"s", print_s},
 		{"d", print_n},
 		{"i", print_n},
+		{"b", print_b},
 		{NULL, NULL}
+
 	};
 
 	for (i = 0; pick[i].f_spec; i++)
 	{
 		if (pick[i].f_spec[0] == *format)
 		{
-			return pick[i].f;
+			return (pick[i].f);
 		}
 	}
 
-	return NULL;
+	return (NULL);
 }
 
 /**
@@ -43,7 +45,7 @@ int _printf(const char *format, ...)
 
 	if (format == NULL)
 	{
-		return -1;
+		return (-1);
 	}
 
 	va_start(list, format);
@@ -84,5 +86,5 @@ int _printf(const char *format, ...)
 	}
 
 	va_end(list);
-	return count;
+	return (count);
 }

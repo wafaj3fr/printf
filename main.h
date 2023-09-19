@@ -22,5 +22,6 @@ int _printf(const char *format, ...);
 int print_c(va_list list);
 int print_s(va_list list);
 int print_n(va_list list);
+int print_b(va_list list);
 
 #endif
