@@ -7,6 +7,11 @@
 #include <unistd.h>
 #include <string.h>
 
+/**
+ * struct format - format struct
+ * @f_spec: format specifier
+ */
+
 typedef struct format
 {
 	char *f_spec;
