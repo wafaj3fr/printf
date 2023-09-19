@@ -1,45 +1,46 @@
 #include "main.h"
 
 /**
- * print_b - Print an unsigned integer in binary format
- * @list: The va_list containing the unsigned integer to print
- * Return: The number of characters printed
+ * print_binary - Prints an unsigned number
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Numbers of char printed.
  */
-
-int print_b(va_list list)
+int print_binary(va_list types, char buffer[],
+		int flags, int width, int precision, int size)
 {
-	char dc;
-	unsigned int len, t, j, digit, b, num;
-	int count = 0;
+	unsigned int k, j, i, sum;
+	unsigned int a[32];
+	int count;
 
-	b = va_arg(list, unsigned int);
-	if (b != 0)
+	UNUSED(buffer);
+	UNUSED(flags);
+	UNUSED(width);
+	UNUSED(precision);
+	UNUSED(size);
+
+	k = va_arg(types, unsigned int);
+	j = 2147483648; /* (2 ^ 31) */
+	a[0] = k / j;
+	for (i = 1; i < 32; i++)
 	{
-		num = b;
-		len = 0;
-
-		while (num != 0)
-		{
-			num /= 2;
-			len++;
-		}
-		t = 1;
-		for (j = 1; j <= len - 1; j++)
-			t *= 2;
-		for (j = 1; j <= len; j++)
-		{
-			digit = b / t;
-			dc = '0' + digit;
-			write(1, &dc, 1);
-			count++;
-			b -= digit * t;
-			t /= 2;
-		}
+		j /= 2;
+		a[i] = (k / j) % 2;
 	}
-	else
+	for (i = 0, sum = 0, count = 0; i < 32; i++)
 	{
-		write(1, "0", 1);
-		return (1);
+		sum += a[i];
+		if (sum || i == 31)
+		{
+			char z = '0' + a[i];
+
+			write(1, &z, 1);
+			count++;
+		}
 	}
 	return (count);
 }
