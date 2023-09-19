@@ -1,41 +1,44 @@
 #include "main.h"
 
-int print_n(va_list list)
+/**
+ * print_int - Print int
+ * @types: Lista of arguments
+ * @buffer: Buffer array to handle print
+ * @flags:  Calculates active flags
+ * @width: get width.
+ * @precision: Precision specification
+ * @size: Size specifier
+ * Return: Number of chars printed
+ */
+int print_int(va_list types, char buffer[],
+		int flags, int width, int precision, int size)
 {
-	int n = va_arg(list, int);
-	int count = 0;
-	int i;
-	int temp;
-	int num_digits;
+	int i = BUFF_SIZE - 2;
+	int is_negative = 0;
+	long int n = va_arg(types, long int);
+	unsigned long int num;
 
-	/* Handle negative numbers */
+	n = convert_size_number(n, size);
+
+	if (n == 0)
+		buffer[i--] = '0';
+
+	buffer[BUFF_SIZE - 1] = '\0';
+	num = (unsigned long int)n;
+
 	if (n < 0)
-       	{
-		write(1, "-", 1);
-		n = -n;
-		count++;
+	{
+		num = (unsigned long int)((-1) * n);
+		is_negative = 1;
 	}
 
-
-	/* Calculate the number of digits in n */
-	num_digits = 1;
-
-	while (temp >= 10)
-       	{
-		temp /= 10;
-		num_digits++;
+	while (num > 0)
+	{
+		buffer[i--] = (num % 10) + '0';
+		num /= 10;
 	}
 
+	i++;
 
-	/* Extract and print each digit */
-	for (i = 0; i < num_digits; i++)
-       	{
-		int digit = n % 10;
-		char digit_char = '0' + digit;
-		write(1, &digit_char, 1);
-		n /= 10;
-		count++;
-	}
-
-	return count;
+	return (write_number(is_negative, i, buffer, flags, width, precision, size));
 }
