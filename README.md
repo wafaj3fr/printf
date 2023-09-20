@@ -17,3 +17,4 @@ For example when it encounters %d, the expected data type of the argument is int
 ## Standard funtions used in this project
  write, va_list, va_start, va_end, va_arg
 
+## using a local buffer of 1024
